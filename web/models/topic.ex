@@ -2,7 +2,8 @@ defmodule Discuss.Topic do
   use Discuss.Web, :model
 
   schema "topics" do
-    field :title, :string
+    field :title, :strings
+    belongs_to :user, Discuss.User
   end
 
   def changeset(struct, params \\ %{}) do

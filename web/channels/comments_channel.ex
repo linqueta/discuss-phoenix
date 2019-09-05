@@ -4,8 +4,9 @@ defmodule Discuss.CommentsChannel do
   alias Discuss.{Topic, Comment}
 
   def join("comments:" <> topic_id, _params, socket) do
-    topic_id = String.to_integer(topic_id)
-    topic = Repo.get(Topic, topic_id)
+    topic = Topic
+     |> Repo.get(handle_topic_id(topic_id))
+     |> Repo.preload(:comments)
 
     {:ok, %{}, assign(socket, :topic, topic)}
   end
@@ -25,5 +26,9 @@ defmodule Discuss.CommentsChannel do
 
   defp reply_handled(content, socket) do
     {:reply, content, socket }
+  end
+
+  defp handle_topic_id(topic_id) do
+    String.to_integer(topic_id)
   end
 end

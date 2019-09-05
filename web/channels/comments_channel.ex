@@ -8,7 +8,7 @@ defmodule Discuss.CommentsChannel do
      |> Repo.get(handle_topic_id(topic_id))
      |> Repo.preload(:comments)
 
-    {:ok, %{}, assign(socket, :topic, topic)}
+    {:ok, %{comments: topic.comments}, assign(socket, :topic, topic)}
   end
 
   def handle_in(name, %{"content" => content}, socket) do

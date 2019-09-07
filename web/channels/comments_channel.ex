@@ -6,7 +6,7 @@ defmodule Discuss.CommentsChannel do
   def join("comments:" <> topic_id, _params, socket) do
     topic = Topic
      |> Repo.get(handle_topic_id(topic_id))
-     |> Repo.preload(:comments)
+     |> Repo.preload(comments: [:user])
 
     {:ok, %{comments: topic.comments}, assign(socket, :topic, topic)}
   end
